@@ -1,0 +1,6 @@
+export const SET_BRANDS = "SET_BRANDS";
+export const SET_BRANDS_ERROR = "SET_BRANDS_ERROR"
+export const SET_BRANDS_LOADING = "SET_BRANDS_LOADING";
+export const SAVE_BRAND = "SAVE_BRAND";
+export const CREATE_BRAND = "CREATE_BRAND"
+export const DELETE_BRAND = "DELETE_BRAND"
