@@ -11,14 +11,9 @@ interface IActionReducer{
 type AppDispatch = any
 
 //BRAND
-type Brand = {
-    _id?:string;
-    code: string;
-    name: string;
-};
 
 interface IBrand{
-    _id: string,
+    _id?: string,
     code: string,
     name: string
 }

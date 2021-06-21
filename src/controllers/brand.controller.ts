@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response } from "express";
+import {NextFunction, Request, response, Response } from "express";
 import mongoose from 'mongoose';
 
 import Brand from "../models/brand";
@@ -65,6 +65,39 @@ export const getBrandList = async (
       }
   };
 
+  export const updateBrandById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+      try{
+        validateParamId(req.params.id,next);
+        validate(req.body);
+        let id = mongoose.Types.ObjectId(req.params.id);
+        const brandFound = await Brand.findOneAndUpdate(
+          { _id: id },
+          {
+            $set: {
+              code: req.body.code,
+              name: req.body.name
+            }
+          },
+          {
+            upsert: true
+          }
+        );
+
+        if(brandFound){
+          res.status(200).json({status:200, message:"success", data:{_id:id, code: req.body.code, name: req.body.name}});
+        }else{
+          next(new HttpException(500,"Brand not Found"));
+        }
+      }catch(e){
+            next(new HttpException(e.status,e.message));
+      }
+  };
+
+
 
   export const deleteBrandById = async (
     req: Request,
@@ -78,7 +111,8 @@ export const getBrandList = async (
         //console.log(noteFound)
         if(brandFound)
             res.status(200).json({status:200, message:"success", data:brandFound});
-        next(new HttpException(500,"Not found element to delete"));
+        else
+            next(new HttpException(500,"Not found element to delete"));
       }catch(e){
         //console.log("this is the catcher")
         //console.log(e)
