@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
+import { IProduct } from "../interfaces/IProduct";
 
-const Product = mongoose.model(
-  "Product",
-  new mongoose.Schema({
+const productSchema = new mongoose.Schema({
     gender: String,
     cost: Number,
     brand: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Brand"
-    }
-  })
-);
-
-module.exports = Product;
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Brand"
+      }
+  },{  timestamps: true });
+  
+  
+  export = mongoose.model("Product", productSchema);
+  

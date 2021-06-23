@@ -19,7 +19,21 @@ interface IBrand{
 }
 
 interface IBrandStateReducer {
-    brands:Brand[];
+    brands:IBrand[];
     brandLoading: boolean;
     brandError: string;
+}
+
+//PRODUCT
+interface IProduct{
+    _id?: string,
+    gender: string,
+    cost: Number,
+    brand?: IBrand
+}
+
+interface IProductStateReducer {
+    products:IProduct[];
+    productsLoading: boolean;
+    productsError: string;
 }
