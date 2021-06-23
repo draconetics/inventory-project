@@ -2,7 +2,11 @@ import * as actionTypes from '../actions/types'
 const initialState:IProductStateReducer = {
     products:[],
     productsLoading:false,
-    productsError:""
+    productsError:"",
+    productSelected:{
+        cost:0,
+        gender:''
+    }
 }
 export const productReducer = (
     state = initialState,
@@ -13,6 +17,12 @@ export const productReducer = (
             return {
                 ...state,
                 products:action.value,
+            }
+        case actionTypes.SELECT_PRODUCT:
+            console.log(JSON.stringify(action.value));
+            return {
+                ...state,
+                productSelected:action.value,
             }
         /* case actionTypes.SAVE_BRAND:         
             const newList = state.brands.map((item)=>{

@@ -36,4 +36,5 @@ interface IProductStateReducer {
     products:IProduct[];
     productsLoading: boolean;
     productsError: string;
+    productSelected: IProduct;
 }

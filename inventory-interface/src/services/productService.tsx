@@ -3,11 +3,15 @@ import {http}  from  '../config/http-common'
 class ProductService {
 
   getList() {
-        return http.get("/api/products");
+      return http.get("/api/products");
   }
 
   createProduct(data:IProduct){
-    return  http.post("/api/products", data);    
+      return  http.post("/api/products", data);    
+  }
+
+  getProductById(id:string) {
+      return  http.get("/api/products/"+id);    
   }
 /*
   updateBrand(id:string, data:IBrand){

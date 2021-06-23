@@ -1,4 +1,4 @@
-import {SET_PRODUCTS, SET_PRODUCTS_LOADING, SET_PRODUCTS_ERROR} from './types';
+import {SET_PRODUCTS, SET_PRODUCTS_LOADING, SET_PRODUCTS_ERROR, SELECT_PRODUCT} from './types';
 import productService from '../../services/productService';
 import * as actionTypes from './types';
 
@@ -67,3 +67,38 @@ export const createProduct = (data:IProduct) => (dispatch:AppDispatch) =>{
         });
 };//end create new brand
   
+export const getProductById = (id:string) =>(dispatch:AppDispatch) =>{
+    dispatch({
+        type: SET_PRODUCTS_LOADING,
+        value: true
+    });
+    console.log('get product by id');
+    return productService.getProductById(id)
+        .then(resp => {
+            console.log(resp);
+            // dispatch
+            dispatch({
+                type: SELECT_PRODUCT,
+                value: resp.data.data
+            });
+            
+            dispatch({
+                type: SET_PRODUCTS_LOADING,
+                value: false
+            });
+            dispatch({
+                type: SET_PRODUCTS_ERROR,
+                value: ""
+            }); 
+        }).catch((e)=>{
+            //console.log("entra a catcher")
+            dispatch({
+                type: SET_PRODUCTS_LOADING,
+                value: false
+            });
+            dispatch({
+                type: SET_PRODUCTS_ERROR,
+                value: "Error getting data from the server: " + e.message
+            });
+        });
+};//end getProductById

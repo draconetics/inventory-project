@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Table, Modal, Form, ModalFooter} from 'react-bootstrap';
+import { Table} from 'react-bootstrap';
 
 interface IPropsProductListComponent {
     products: IProduct[];
