@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-import { IProduct } from "../interfaces/IProduct";
 
 const productSchema = new mongoose.Schema({
     gender: String,
