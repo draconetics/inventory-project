@@ -1,11 +1,8 @@
-import { NextFunction } from "express";
+import { HttpException } from "../../common/HttpException";
+import mongoose from 'mongoose';
 
-export const validateParamId = (param:string, next: NextFunction)=>{
-    let idFilter: RegExp = /[0-9a-f]{24}/;
-    if(!idFilter.test(param)){
-        next();
-    }else{
-        throw new Error('Param Id is wrong');
+export const validateParamId = (param:string)=>{
+    if(!mongoose.isValidObjectId(param)){
+        throw new HttpException(500,'Param Id is wrong');   
     }
-        
 }

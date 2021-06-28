@@ -1,7 +1,8 @@
 import {Document} from 'mongoose'
 export interface IBrand extends Document{
     code:String,
-    name:String
+    name:String,
+    tmp:Number
 }
 /* 
 export interface INoteValidator {

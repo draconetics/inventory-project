@@ -1,15 +1,13 @@
-import BrandListComponent from './ProductCreateComponent'
+import ProductCreateComponent from './ProductCreateComponent'
 import { connect } from 'react-redux';
 
 import {getBrands} from '../../store/actions/brandAction';
-import {createProduct} from '../../store/actions/productAction';
-//import {CREATE_NOTE_DO_LIST, DELETE_NOTE, SAVE_NOTE_DO_LIST, SET_NOTES_DO,SET_NOTES_DONE, SET_NOTES_ERROR} from '../../actions/types'
-//import * as actionCreators from '../../actions/noteAction'
-
+import {createProduct, getProductById, updateProduct} from '../../store/actions/productAction';
 
 export const mapStateToProps = (state:any) =>{
       return {
           brands: state.brandReducer.brands,
+          productSelected: state.productReducer.productSelected,
       }
   }
  
@@ -17,10 +15,10 @@ export const mapDispatchToProps = (dispatch: AppDispatch)=>{
     
     return {
       getBrands: () => dispatch(getBrands()),
-      createProduct: (data:IProduct) => dispatch(createProduct(data)),/*
-      updateBrand: (data:IBrand) => dispatch(updateBrand(data)),
-      deleteBrand: (data:IBrand) => dispatch(deleteBrand(data)) */
+      createProduct: (data:IProduct,image:string) => dispatch(createProduct(data,image)),
+      updateProduct: (data:IProduct, image:string) => dispatch(updateProduct(data,image)),
+      getProductById: (data:string) => dispatch(getProductById(data)),
     };
 }
   
-export default connect(mapStateToProps, mapDispatchToProps)(BrandListComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductCreateComponent);

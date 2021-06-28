@@ -1,53 +1,59 @@
 import React from 'react';
-import { Table} from 'react-bootstrap';
+import { Table, Button} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-interface IPropsProductListComponent {
-    products: IProduct[];
-    getProducts: () => Promise<void>;
-    /* createBrand:(data:IBrand)=> void;
-    updateBrand:(data:IBrand)=> void;
-    deleteBrand:(data:IBrand)=>void; */
+interface IPropsSaleListComponent {
+    sales: ISale[];
+    getSales: () => Promise<void>;
 }
   
-interface IStateProductListComponent{
+interface IStateSaleListComponent{
 }
 
 
-export default class SaleListComponent extends React.Component<IPropsProductListComponent,IStateProductListComponent> {
+export default class SaleListComponent extends React.Component<IPropsSaleListComponent,IStateSaleListComponent> {
 
 
       componentDidMount(){
-        this.props.getProducts();
+        this.props.getSales();
       }
     
       render(){
-        const productList = this.props.products;
+        const saleList = this.props.sales;
         return (
           <div className="brand-list">
               <h2>this is SALELIST component</h2>
-              <h3>{JSON.stringify(this.props.products)}</h3>
+              <h3>{JSON.stringify(this.props.sales)}</h3>
               <div className="container">
-                <button className="btn btn-primary">Create new Product</button>
+                <Link to="/sales/qr">
+                  <Button variant="success">New Sale by CAMERA</Button>
+                </Link>
+                
               </div>
               <div className="container">
                 <Table striped bordered hover>
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Brand</th>
-                      <th>Gender</th>
-                      <th>Cost</th>
+                      <th>Sale Code</th>
+                      <th>Client</th>
+                      <th>Product</th>
+                      <th>Date</th>
                       <th>Operations</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {productList && productList.map((item, index)=>{
+                    {saleList && saleList.map((item, index)=>{
+                      let client = item.client;
+                      let product = item.product;
+                      let productBrand = (product && product.brand && product.brand.name)?product.brand.name:'';
                       return (
                         <tr key={index}>
                           <td>{index+1}</td>
-                          <td>{(item.brand)?item.brand.name:'No brand found'}</td>
-                          <td>{item.cost}</td>
-                          <td>{item.gender}</td>
+                          <td>{item.sale_code}</td>
+                          <td>{(client.name)?client.name:client}</td>
+                          <td>Cost:{(product && product.cost)?product.cost:''}-Brand:{productBrand}</td>
+                          <td>{item.date}</td>
                           <td>
                             <button className="btn btn-success" >Edit</button>
                             <button className="btn btn-danger" >Delete</button>

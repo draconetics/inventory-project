@@ -4,13 +4,15 @@ import {
   createProduct,
   getProductById,
   updateProduct,
-  deleteProductById
+  deleteProductById,
+  getProductByCode
 } from '../controllers/product.controller';
 
 
 const router = Router();
 
 router.get('/api/products', getProductList);
+router.get('/api/products/code/:code', getProductByCode);
 router.get('/api/products/:id', getProductById);
 router.put('/api/products', updateProduct)
 router.post('/api/products', createProduct);

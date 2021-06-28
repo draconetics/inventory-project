@@ -3,23 +3,23 @@ import {http}  from  '../config/http-common'
 class SaleService {
 
   getList() {
-      return http.get("/api/products");
+      return http.get("/api/sales");
   }
 
   createSale(data:ISale){
-      return  http.post("/api/products", data);    
+      return  http.post("/api/sales", data);    
   }
 
   getSaleById(id:string) {
-      return  http.get("/api/products/"+id);    
+      return  http.get("/api/sales/"+id);    
   }
   
   updateSale(id:string, data:IBrand){
-    return  http.put("/api/brands/"+id, data);    
+    return  http.put("/api/sales/"+id, data);    
   }
 
   deleteSale(id:string){
-    return  http.delete("/api/brands/"+id);    
+    return  http.delete("/api/sales/"+id);    
   }
 }
 

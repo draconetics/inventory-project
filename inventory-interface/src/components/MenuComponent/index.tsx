@@ -12,6 +12,7 @@ export default function MenuComponent() {
                     <Nav.Link href="/home">Home</Nav.Link>
                     <Nav.Link href="/products">Products</Nav.Link>
                     <Nav.Link href="/sales">Sales</Nav.Link>
+                    <Nav.Link href="/clients">Clients</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

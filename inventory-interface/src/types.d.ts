@@ -26,10 +26,12 @@ interface IBrandStateReducer {
 
 //PRODUCT
 interface IProduct{
+    code?:Number,
     _id?: string,
     gender: string,
-    cost: Number,
-    brand?: IBrand
+    cost: number,
+    brand?: IBrand,
+    imageId?:string
 }
 
 interface IProductStateReducer {
@@ -37,4 +39,44 @@ interface IProductStateReducer {
     productsLoading: boolean;
     productsError: string;
     productSelected: IProduct;
+}
+
+//SALE
+
+interface ISale{
+    _id?: string,   
+    sale_code: string,
+    client:any,
+    product:any,
+    date:string
+}
+
+interface ISaleStateReducer {
+    sales:ISale[];
+    salesLoading: boolean;
+    salesError: string;
+    cart:IProduct[];
+}
+
+//CLIENT
+
+interface IClient{
+    _id?: string,
+    name: string,
+    phone: string,
+    email: string,
+    code: string,
+}
+
+interface IClientStateReducer {
+    clients:IClient[];
+    clientsLoading: boolean;
+    clientsError: string;
+}
+
+
+//CART
+
+interface ICartStateReducer {
+    cart:IProduct[];
 }

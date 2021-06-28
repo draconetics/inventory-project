@@ -1,7 +1,7 @@
 import ProductViewComponent from './ProductViewComponent'
 import { connect } from 'react-redux';
 
-import { getProductById} from '../../store/actions/productAction';
+import { getProductById, getProductByCode} from '../../store/actions/productAction';
 
 export const mapStateToProps = (state:any) =>{
       return {
@@ -13,7 +13,8 @@ export const mapStateToProps = (state:any) =>{
 export const mapDispatchToProps = (dispatch: AppDispatch)=>{
     
     return {
-      getProductById: (id:string) => dispatch(getProductById(id))
+      //getProductById: (id:string) => dispatch(getProductById(id))
+      getProductByCode: (code:number) => dispatch(getProductByCode(code)),
       /*getBrands: () => dispatch(getBrands()),
       createProduct: (data:IProduct) => dispatch(createProduct(data)),
       updateBrand: (data:IBrand) => dispatch(updateBrand(data)),

@@ -1,10 +1,11 @@
-import SaleListComponent from './SaleListComponent';
+import ClientListComponent from './ClientListComponent'
 import { connect } from 'react-redux';
-import { getSales } from '../../store/actions/saleAction';
+
+import { getClients } from '../../store/actions/clientAction';
 
 export const mapStateToProps = (state:any) =>{
       return {
-          sales: state.saleReducer.sales,
+          clients: state.clientReducer.clients,
           /* productLoading: state.productReducer.brandLoading,
           productError: state.productReducer.productError, */
       }
@@ -13,11 +14,11 @@ export const mapStateToProps = (state:any) =>{
 export const mapDispatchToProps = (dispatch: AppDispatch)=>{
     
     return {
-      getSales: () => dispatch(getSales()),
+      getClients: () => dispatch(getClients()),
       /* createBrand: (data:IBrand) => dispatch(createBrand(data)),
       updateBrand: (data:IBrand) => dispatch(updateBrand(data)),
       deleteBrand: (data:IBrand) => dispatch(deleteBrand(data)) */
     };
 }
   
-export default connect(mapStateToProps, mapDispatchToProps)(SaleListComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(ClientListComponent);

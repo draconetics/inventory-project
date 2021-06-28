@@ -1,7 +1,7 @@
 import {NextFunction, Request, response, Response } from "express";
 import mongoose from 'mongoose';
 
-import Brand from "../models/brand";
+import {Brand} from "../models/brand";
 
 import {IBrand} from '../interfaces/IBrand';
 import {IBrands} from '../interfaces/IBrands';
@@ -54,7 +54,7 @@ export const getBrandList = async (
     next: NextFunction,
   ) => {
       try{
-        validateParamId(req.params.id,next)
+        validateParamId(req.params.id);
         let id = mongoose.Types.ObjectId(req.params.id);
         const brandFound:IBrand|null = await Brand.findOne({_id: id})
         if(brandFound)
@@ -71,7 +71,7 @@ export const getBrandList = async (
     next: NextFunction,
   ) => {
       try{
-        validateParamId(req.params.id,next);
+        validateParamId(req.params.id);
         validate(req.body);
         let id = mongoose.Types.ObjectId(req.params.id);
         const brandFound = await Brand.findOneAndUpdate(
@@ -105,7 +105,7 @@ export const getBrandList = async (
     next: NextFunction,
   ) => {
       try{
-        validateParamId(req.params.id,next)
+        validateParamId(req.params.id);
         let id = mongoose.Types.ObjectId(req.params.id);
         const brandFound:IBrand|null = await Brand.findByIdAndRemove(id)
         //console.log(noteFound)

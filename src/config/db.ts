@@ -1,8 +1,10 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const DB_URI = 'mongodb://localhost/inventory-project';
 const DB_PROD = 'mongodb+srv://draconetics:draconetics@cluster0-74ml0.mongodb.net/test?retryWrites=true&w=majority'
 const DB_TESTING = 'mongodb://localhost/c04-typescript-testing';
-    
+
+
+
 const connect = ()=> {
     return new Promise((resolve, reject) => 
         {

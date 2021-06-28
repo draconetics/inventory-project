@@ -1,12 +1,14 @@
 import React from 'react';
 import QRCode from 'qrcode';
 import ReactToPrint from "react-to-print";
-import { RouteComponentProps } from "react-router-dom";
-import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap'
+import { Link, RouteComponentProps } from "react-router-dom";
+import { Button, Card, Col, ListGroup, Row, Image } from 'react-bootstrap'
+import { urlPreviewImage } from '../../config/google-drive';
 
 interface IPropsProductViewComponent extends RouteComponentProps<any>{
     productSelected:IProduct;
     getProductById:(id:string)=> void;
+    getProductByCode:(code:number)=> void;
 }
 
 interface IStateProductViewComponent{
@@ -25,21 +27,21 @@ export default class ProductViewComponent extends React.Component<IPropsProductV
     componentDidMount() {
         console.log('component did mount')
         const params = this.props.match.params;
-        if( params && params.id && params.id.length === 24){
+        if( params && params.code ){
             console.log('watching id')
-            const {id} = this.props.match.params;
-            this.props.getProductById(id);
-            this.generateQrCode();
+            const {code} = this.props.match.params;
+            this.props.getProductByCode(code);
+            this.generateQrCode(code);
         }else{
             console.log('redirection');
             this.props.history.push('/products');
         }
     }
 
-    async generateQrCode () {
+    async generateQrCode (id:string) {
         
         try {
-              const response = await QRCode.toDataURL(window.location.href);
+              const response = await QRCode.toDataURL(id);
               this.setState({
                   ...this.state,
                   codeQrImage: response
@@ -61,15 +63,21 @@ export default class ProductViewComponent extends React.Component<IPropsProductV
                     <Col xs={12} md={6} lg={6} xl={6}>
                         <Card style={{ width: '18rem' }}>
                             <Card.Body>
-                                <Card.Title>Product View</Card.Title>
+                                <Card.Title>Product View
+                                    <Col xs={12} md={12}>
+                                        <Image thumbnail src={urlPreviewImage + productSelected.imageId} alt={'not found'}/>
+                                    </Col>
+                                </Card.Title>
                                 <ListGroup>
                                     <ListGroup.Item><b>Cost:</b>{productSelected.cost}</ListGroup.Item>
                                     <ListGroup.Item><b>Gender:</b> {productSelected.gender}</ListGroup.Item>
                                     <ListGroup.Item><b>Brand:</b> {(productSelected.brand)?productSelected.brand.name:'undefined'}</ListGroup.Item>
                                     <ListGroup.Item><b>Url:</b> {window.location.href}</ListGroup.Item>
                                 </ListGroup>
+                                <Link to="/products">
+                                    <Button variant="primary">Back to Products</Button>
+                                </Link>
                                 
-                                <Button variant="primary">Back to Products</Button>
                             </Card.Body>
                         </Card>
                         </Col>
@@ -77,7 +85,7 @@ export default class ProductViewComponent extends React.Component<IPropsProductV
                         <Card style={{ width: '18rem' }}>
                             
                             <Card.Body>
-                                <Card.Title>QR Code</Card.Title>
+                                <Card.Title>Download QR Code</Card.Title>
                                 {codeQrImage ? (
                                 <a href={codeQrImage} download>
                                     <img src={codeQrImage} alt="img"/>
@@ -85,7 +93,8 @@ export default class ProductViewComponent extends React.Component<IPropsProductV
                                 
                             </Card.Body>
                             <ReactToPrint
-                                trigger={() => <button>Print this out!</button>}
+                                pageStyle={`{size: 2.28in 2.28in}`}
+                                trigger={() => <Button variant="danger">Print ticket!</Button>}
                                 content={() => this.componentRef }
                             />
                             <div style={{display:'block'}}>
@@ -95,7 +104,6 @@ export default class ProductViewComponent extends React.Component<IPropsProductV
                                     ref={(el) => (this.componentRef = el) } 
                                 />
                             </div>
-                            <Button variant="success">Print</Button>
                         </Card>
                     </Col>
                 </Row>
@@ -111,13 +119,35 @@ interface IComProps{
 }
 
 const boxStyle = {
-    color:'blue',
-    backgroundColor:'gray',
-    width:'100px',
-    height:'fit-content',
+    
+    width:'200px',
+    height:'100px',
     display:'flex',
-    FlexDirection:'column',
-    FlexWrap:'no-wrap'
+    FlexDirection:'row',
+    FlexWrap:'no-wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding:'0px',
+    margin:'0px',
+    boxSize:'border-box'
+}
+
+const data = {
+    padding:'0px',
+    margin:'0px',
+    boxSize:'border-box',
+    fontSize:'12px'
+}
+
+const paragraph = {
+    fontWeight: 900,
+    padding:'0px',
+    margin:'0px',
+    boxSize:'border-box',
+}
+
+const cost = {
+    fontSize:'16px',
 }
 
 class ComponentToPrint extends React.Component <IComProps,any>{
@@ -128,12 +158,18 @@ class ComponentToPrint extends React.Component <IComProps,any>{
       const product = this.props.product;
       return (
         <div style={boxStyle}>
+            <div style={data}>
+                <p style={paragraph}>Aeropostale</p>
+                <p style={paragraph}>Size: L</p>
+                <p style={paragraph}>T-shirt</p>
+                <p style={cost}>ID<b>{product.code}</b></p>
+            </div>
             {qrImage ? (
             <a href={qrImage} download>
                 <img src={qrImage} alt="img" style={{width:'70px',height:'70px'}}/>
             </a>) : 'ERROR generating QR code'}
-            <h2>Bs{product.cost}</h2>
+            <p style={cost}>Bs <b>{product.cost}.00</b></p>
         </div>
       );
     }
-  }
+}

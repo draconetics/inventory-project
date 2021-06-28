@@ -17,6 +17,7 @@
     "bootstrap": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "googleapis": "^78.0.0",
     "mongoose": "^5.12.14",
     "qrcode": "^1.4.4",
     "react-bootstrap": "^1.6.1",
